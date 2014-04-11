@@ -1,0 +1,5 @@
+django>=1.6.1
+psycopg2
+coverage>=2.5.2
+
+-e git+https://github.com/motherjones/mirrors.git#egg=mirrors
