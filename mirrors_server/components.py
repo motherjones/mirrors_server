@@ -44,10 +44,25 @@ class Article(Component):
 
     title = StringSchema(required=True)
     description = StringSchema()
+    alternate_title = StringSchema()
+    alternate_description = StringSchema()    
+    social_title = StringSchema()
+    social_description = StringSchema()    
     
     master_image = Attribute('canonImage', required=True)
     byline = AttributeList('author', required=True)
-    inline_components = AttributeList('canonImage') #Needs more
+    
+    """
+    Inline components are really special and are used to make
+    sure that inline components like images or mini-navs are
+    returned as part of articles and also that any inline reference
+    is updated if the component is removed or changed.
+
+    Smoke should add components referenced in markdown here.
+    
+    We should add any components we have inline templates for here.
+    """
+    inline_components = AttributeList('canonImage') 
 
 
 class List(Component): #Formally nodequeues
