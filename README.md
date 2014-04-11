@@ -14,14 +14,13 @@ It's some kind of content store.
  - Sphinx
 
 If you want to have an easier time of it just run `pip install -r
-./requirements.txt`. In the future we'll probably make some kind of automated
+requirements/apps.txt`. In the future we'll probably make some kind of automated
 environment setup.
 
 ## Running
 
-Before doing anything other than installing all of the requirements, remember to
-set up your database. Edit `mirrors/settings.py` to reflect your database
-settings and then do this:
+Settings file is currently one size fits all and set to mirrors in postgres.
+We should improve this
 
     $ python ./manage.py syncdb
       [...]
