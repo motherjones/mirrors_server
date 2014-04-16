@@ -1,6 +1,5 @@
-django>=1.6.1
+-e git+https://github.com/django/django.git#egg=django
 psycopg2
 south
 coverage>=2.5.2
 
--e git+https://github.com/motherjones/mirrors.git#egg=mirrors

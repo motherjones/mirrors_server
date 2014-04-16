@@ -13,6 +13,7 @@ except:
     XS_SHARING_ALLOWED_ORIGINS = '*'
     XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
 
+    XS_SHARING_ALLOWED_HEADERS = ['Content-Type', 'X-PINGOTHER']
 
 class XsSharing(object):
     """
@@ -27,8 +28,11 @@ class XsSharing(object):
         if 'HTTP_ACCESS_CONTROL_REQUEST_METHOD' in request.META:
             response = http.HttpResponse()
             response['Access-Control-Allow-Origin']  = XS_SHARING_ALLOWED_ORIGINS 
-            response['Access-Control-Allow-Methods'] = ",".join( XS_SHARING_ALLOWED_METHODS ) 
-            
+            response['Access-Control-Allow-Methods'] = ",".join(
+                                            XS_SHARING_ALLOWED_METHODS)
+            response['Access-Control-Allow-Headers'] = ",".join(
+                                            XS_SHARING_ALLOWED_HEADERS)
+
             return response
 
         return None
