@@ -27,8 +27,8 @@ class Author(Component):
 
 
 class CanonImage(Image):
-    id = 'canonImage' #how do we do stuff in js and python?
-    schema_title = 'base image component'
+    id = 'canon-image'
+    schema_title = 'image component with byline and requires stuff'
     
     alt_text = StringSchema(required=True)
     caption = StringSchema(required=True)
@@ -42,6 +42,8 @@ class Article(Component):
     schema_title = 'main article'
     content_type = ['text/x-markdown']
 
+    section = StringSchema(enum=['politics', 'culture', 'environment'])
+
     title = StringSchema(required=True)
     description = StringSchema()
     alternate_title = StringSchema()
@@ -49,7 +51,7 @@ class Article(Component):
     social_title = StringSchema()
     social_description = StringSchema()    
     
-    master_image = Attribute('canonImage', required=True)
+    master_image = Attribute('canon-image', required=True)
     byline = AttributeList('author', required=True)
     
     """
@@ -62,7 +64,7 @@ class Article(Component):
     
     We should add any components we have inline templates for here.
     """
-    inline_components = AttributeList('canonImage') 
+    inline_components = AttributeList('canon-image') 
 
 
 class List(Component): #Formally nodequeues
@@ -78,7 +80,7 @@ class ListOfLists(List):
     """
     TODO: Make this more sensical for reuse.
     """
-    id = 'listOfLists'
+    id = 'list-of-lists'
     schema_title = 'base list of lists'
 
     main = AttributeList('list')
