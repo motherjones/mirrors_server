@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_coverage',
     'rest_framework',
+    'django-coverage',
     'mirrors_server', 
     'mirrors',
 )
@@ -73,6 +74,41 @@ DATABASES = {
         'PASSWORD': '',
     }
 }
+
+
+# Logging
+# https://docs.djangoproject.com/en/1.6/topics/logging/
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log')
+        },
+        'console': {
+            'level':'DEBUG',    
+            'class':'logging.StreamHandler',
+        },  
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['file', 'console'],
+            'level': 'DEBUG',
+            'propogate': True
+        }
+    }
+}
+
+
+# Rest framework
+# http://www.django-rest-framework.org/api-guide/testing
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
