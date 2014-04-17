@@ -30,15 +30,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'django_coverage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_coverage',
     'rest_framework',
-    'django_coverage',
     'mirrors_server', 
     'mirrors',
 )
@@ -128,3 +127,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+COVERAGE_MODULE_EXCLUDES = [
+    'tests$', 'settings$', 'locale$',
+    'common.views.test', '__init__', 'django',
+    'migrations', 'admin$']

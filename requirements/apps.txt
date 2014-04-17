@@ -2,4 +2,4 @@
 psycopg2
 south
 coverage>=2.5.2
--e hg+https://bitbucket.org/kmike/django-coverage#egg=coverage
+-e hg+https://bitbucket.org/kmike/django-coverage#egg=django_coverage
