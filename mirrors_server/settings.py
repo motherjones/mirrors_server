@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_coverage',
     'rest_framework',
-    'django-coverage',
+    'django_coverage',
     'mirrors_server', 
     'mirrors',
 )
