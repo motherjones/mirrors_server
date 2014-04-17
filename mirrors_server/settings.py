@@ -36,7 +36,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
     'rest_framework',
+    'django-coverage',
     'mirrors_server', 
     'mirrors',
 )
@@ -98,6 +100,13 @@ LOGGING = {
             'propogate': True
         }
     }
+}
+
+
+# Rest framework
+# http://www.django-rest-framework.org/api-guide/testing
+REST_FRAMEWORK = {
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
 }
 
 
