@@ -1,11 +1,13 @@
 from django.test import TestCase
+from django.test.client import RequestFactory, Client
 from scheduler.models import * 
 from mirrors.models import *
 from datetime import datetime, timedelta
 import json
 
-class MakeReservationTestCase(TestCase):
+class ReservationRequestTest(TestCase):
     def setUp(self):
+        self.client = Client()
         self.valid_component = {
             'content_type': 'application/x-markdown',
             'schema_name': 'article',
@@ -16,12 +18,21 @@ class MakeReservationTestCase(TestCase):
         }
 
     def test_make_reservation(self):
-        self.assertTrue(Reservation(slug='example', datetime=datetime.now()))
+        response = self.client.post('/scheduler',
+                {'slug': 'example', 'datetime': datetime.now().isoformat()})
+        self.assertEqual(response.status_code, 200)
     def test_make_reservation_invalid_slug(self):
-        self.assertFalse(Reservation(slug='foobar', datetime=datetime.now()))
+        response = self.client.post('/scheduler',
+                {'slug': 'nope!!!', 'datetime': datetime.now().isoformat()})
+        self.assertEqual(response.status_code, 400)
     def test_make_reservation_invalid_date(self):
-        teh_past = timedelta(days=-1)
-        self.assertFalse(Reservation(slug='example', datetime=teh_past))
+        response = self.client.post('/scheduler',
+                {'slug': 'example',
+                 'datetime': datetime(1990,1,1).isoformat()})
+        self.assertEqual(response.status_code, 400)
+
+
+
     #def test_change_reservation(self):
     #    r = Reservation(slug='example', datetime=timedelta(days=10))
     #    r.datetime = datetime.now()
