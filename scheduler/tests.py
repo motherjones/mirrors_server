@@ -33,21 +33,33 @@ class ReservationRequestTest(TestCase):
 
 
 
-    #def test_change_reservation(self):
-    #    r = Reservation(slug='example', datetime=timedelta(days=10))
-    #    r.datetime = datetime.now()
-    #    self.assertTrue(r.save())
-    #def test_change_reservation_invalid_slug(self):
-    #    r = Reservation(slug='example', datetime=timedelta(days=10))
-    #    r.slug = '_____'
-    #    self.assertFalse(r.save())
+    def test_change_reservation(self):
+        r = Reservation(slug='example', datetime=timedelta(days=10))
+        response = self.client.patch('/scheduler/%s' % r.id,
+                {'slug': 'example',
+                 'datetime': datetime.now().isoformat(),
+                 'reservation': r.id})
+        self.assertEqual(response.status_code, 200)
+    def test_change_reservation_invalid_slug(self):
+        r = Reservation(slug='example', datetime=timedelta(days=10))
+        response = self.client.patch('/scheduler/%s' % r.id,
+                {'slug': 'notexample',
+                 'datetime': datetime.now().isoformat(),
+                 'reservation': r.id})
+        self.assertEqual(response.status_code, 400)
     def test_change_reservation_invalid_date(self):
         r = Reservation(slug='example', datetime=timedelta(days=10))
-        r.datetime = timedelta(days=-1)
-        self.assertFalse(r.save())
+        past_time = (timedelta(days=-10) + datetime.now()).isoformat()
+        response = self.client.patch('/scheduler/%s' % r.id,
+                {'slug': 'example',
+                 'datetime': past_time,
+                 'reservation': r.id})
+        self.assertEqual(response.status_code, 400)
     def test_delete_reservation(self):
         r = Reservation(slug='example', datetime=timedelta(days=10))
-        self.assertTrue(r.delete())
+        response = self.client.delete('/scheduler/%s' % r.id)
+        self.assertEqual(response.status_code, 204)
     def test_delete_reservation_invalid_slug(self):
-        self.fail("pending")
+        response = self.client.delete('/scheduler/squoodlydoo')
+        self.assertEqual(response.status_code, 400)
 
