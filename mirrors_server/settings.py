@@ -30,7 +30,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
-    'django_coverage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +39,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'mirrors_server', 
     'mirrors',
+    'scheduler',
 )
 
 MIDDLEWARE_CLASSES = (
