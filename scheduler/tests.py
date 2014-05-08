@@ -1,4 +1,3 @@
-import json
 from django.test import TestCase
 from django.test.client import Client
 from scheduler.models import Reservation
@@ -13,9 +12,9 @@ class ReservationRequestTest(TestCase):
             'content_type': 'application/x-markdown',
             'schema_name': 'article',
             'slug': 'example',
-            'metadata': json.dumps({
+            'metadata': {
                 'title': 'Valid component'
-            })
+            }
         }
 
     def test_make_reservation(self):
