@@ -26,55 +26,49 @@ class ReservationRequestTest(TestCase):
 
     def test_make_reservation_invalid_slug(self):
         date = datetime.now().isoformat()
-        response = self.client.post('/scheduler',
-                                    {
-                                        'slug': 'nope!!!',
-                                        'datetime': date
-                                    })
+        response = self.client.post('/scheduler', {
+            'slug': 'nope!!!',
+            'datetime': date
+        })
         self.assertEqual(response.status_code, 400)
 
     def test_make_reservation_invalid_date(self):
         date = datetime(1990, 1, 1).isoformat()
-        response = self.client.post('/scheduler',
-                                    {
-                                        'slug': 'example',
-                                        'datetime': date
-                                    })
+        response = self.client.post('/scheduler', {
+            'slug': 'example',
+            'datetime': date
+        })
         self.assertEqual(response.status_code, 400)
 
     def test_change_reservation(self):
         r = Reservation(slug='example', datetime=self.teh_future)
         r.save()
-        response = self.client.patch(
-            '/scheduler/%s' % r.id,
-             {
-                'slug': 'example',
-                'datetime': datetime.now().isoformat(),
-                'reservation': r.id
-             })
+        response = self.client.patch('/scheduler/%s' % r.id, {
+            'slug': 'example',
+            'datetime': datetime.now().isoformat(),
+            'reservation': r.id
+        })
         self.assertEqual(response.status_code, 200)
 
     def test_change_reservation_invalid_slug(self):
         r = Reservation(slug='example', datetime=self.teh_future)
         r.save()
-        response = self.client.patch('/scheduler/%s' % r.id,
-                                    {
-                                        'slug': 'notexample',
-                                        'datetime': datetime.now().isoformat(),
-                                        'reservation': r.id
-                                    })
+        response = self.client.patch('/scheduler/%s' % r.id, {
+            'slug': 'notexample',
+            'datetime': datetime.now().isoformat(),
+            'reservation': r.id
+        })
         self.assertEqual(response.status_code, 400)
 
     def test_change_reservation_invalid_date(self):
         r = Reservation(slug='example', datetime=self.teh_future)
         r.save()
         past_time = (timedelta(days=-10) + datetime.now()).isoformat()
-        response = self.client.patch('/scheduler/%s' % r.id,
-                {
-                    'slug': 'example',
-                    'datetime': past_time,
-                    'reservation': r.id
-                })
+        response = self.client.patch('/scheduler/%s' % r.id, {
+            'slug': 'example',
+            'datetime': past_time,
+            'reservation': r.id
+        })
         self.assertEqual(response.status_code, 400)
 
     def test_delete_reservation(self):
