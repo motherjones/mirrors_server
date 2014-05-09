@@ -49,6 +49,14 @@ class ReservationRequestTest(TestCase):
         })
         self.assertEqual(response.status_code, 200)
 
+    def test_change_reservation_with_single_field(self):
+        r = Reservation(slug='example', datetime=self.teh_future)
+        r.save()
+        response = self.client.patch('/scheduler/%s' % r.id, {
+            'datetime': datetime.now().isoformat(),
+        })
+        self.assertEqual(response.status_code, 200)
+
     def test_change_reservation_invalid_slug(self):
         r = Reservation(slug='example', datetime=self.teh_future)
         r.save()
