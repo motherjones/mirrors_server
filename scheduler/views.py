@@ -7,6 +7,10 @@ from rest_framework import status
 
 
 class ReservationList(APIView):
+    """
+    ReservationList is for nonspecific Reservation requests, like
+    obtaining all Reservations or creating a new Reservation.
+    """
     def post(self, request, format=None):
         serializer = ReservationSerializer(data=request.DATA)
         if serializer.is_valid():
@@ -16,6 +20,10 @@ class ReservationList(APIView):
 
 
 class ReservationDetail(APIView):
+    """
+    ReservationDetail is for retrieving or modifying a specific
+    Reservation.
+    """
     def get_object(self, pk):
         try:
             return Reservation.objects.get(pk=pk)
