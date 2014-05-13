@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.test.client import Client
+from django.core.urlresolvers import reverse
 from scheduler.models import Reservation
 from datetime import datetime, timedelta
 
@@ -18,10 +19,10 @@ class ReservationRequestTest(TestCase):
         }
 
     def test_make_reservation(self):
-        response = self.client.post('/scheduler',
+        response = self.client.post(reverse('reservation-list'),
                                     {'slug': 'example',
                                      'datetime': datetime.now().isoformat()})
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
 
     def test_make_reservation_invalid_slug(self):
         date = datetime.now().isoformat()
