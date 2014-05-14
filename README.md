@@ -30,4 +30,11 @@ We should improve this
 To run the tests just do this:
 
     $ coverage run --source='.' --omit='*migrations*' manage.py test
+
+Run this to get a plain text coverage report:
+
     $ coverage report
+
+Run this to get an HTML coverage report:
+
+    $ coverage html
