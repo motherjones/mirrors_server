@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from scheduler.models import Reservation
 from mirrors.models import Component
 from datetime import datetime, timedelta
+import json
 
 
 class ReservationRequestTest(TestCase):
@@ -45,17 +46,17 @@ class ReservationRequestTest(TestCase):
         data = {
             'slug': 'example',
             'datetime': datetime.now().isoformat(),
-            'reservation': r.id
         }
-        response = self.client.patch(url, data, format='json')
+        # /me flips table
+        response = self.client.patch(url, json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_change_reservation_with_single_field(self):
         r = Reservation(slug='example', datetime=self.teh_future)
         r.save()
-        response = self.client.patch('/scheduler/%s' % r.id, {
-            'datetime': datetime.now().isoformat(),
-        })
+        url = reverse('reservation-detail', args=[r.id])
+        data = {'datetime': datetime.now().isoformat()}
+        response = self.client.patch(url, json.dumps(data), content_type='application/json') 
         self.assertEqual(response.status_code, 200)
 
     def test_change_reservation_invalid_slug(self):
@@ -82,7 +83,8 @@ class ReservationRequestTest(TestCase):
     def test_delete_reservation(self):
         r = Reservation(slug='example', datetime=self.teh_future)
         r.save()
-        response = self.client.delete('/scheduler/%s' % r.id)
+        url = reverse('reservation-detail', args=[r.id])
+        response = self.client.delete(url)
         self.assertEqual(response.status_code, 204)
 
     def test_delete_reservation_invalid_slug(self):
