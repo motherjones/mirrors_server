@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from scheduler.models import Reservation
 from mirrors.models import Component
 from datetime import datetime, timedelta
+import json
 
 
 class ReservationRequestTest(TestCase):
@@ -45,9 +46,9 @@ class ReservationRequestTest(TestCase):
         data = {
             'slug': 'example',
             'datetime': datetime.now().isoformat(),
-            'reservation': r.id
         }
-        response = self.client.patch(url, data, format='json')
+        # /me flips table
+        response = self.client.patch(url, json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
     def test_change_reservation_with_single_field(self):
