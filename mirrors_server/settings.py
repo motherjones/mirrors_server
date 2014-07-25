@@ -66,11 +66,12 @@ WSGI_APPLICATION = 'mirrors_server.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME':  'mirrors_server',
-        'HOST': '',
-        'PORT': '',
-        'USER': '',
-        'PASSWORD': '',
+        'NAME':  os.environ.get('POSTGRESQL_DB'),
+        
+        'PORT': os.environ.get('DB_1_PORT_5432_TCP_PORT'),
+        'HOST': os.environ.get('DB_1_PORT_5432_TCP_ADDR'),
+        'USER': os.environ.get('POSTGRESQL_USER'),
+        'PASSWORD': os.environ.get('POSTGRESQL_PASS'),
     }
 }
 
